@@ -2,6 +2,7 @@
 // @import url("./assets/css/bootstrap.min.css");
 // @import url("./assets/css/demo.css");
 // @import url("./assets/css/main.css");
+@import '~ngx-toastr/toastr';
 
 
 .right-side
@@ -12,4 +13,16 @@
 .bottom-space
 {
     margin-bottom: 10px;
+}
+
+.cancel-btn
+{
+    margin-right: 10px;
+}
+
+.error-warning-message
+{
+    color: red;
+    margin: 4px 10px;
+    font-size: 13px;
 }

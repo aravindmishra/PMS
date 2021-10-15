@@ -1,6 +1,8 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppConfig } from '../app/app.config';
@@ -12,6 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MedicineDetailsFormComponent } from './components/medicine/medicine-details-form/medicine-details-form.component';
 import { MedicineDetailsListComponent } from './components/medicine/medicine-details-list/medicine-details-list.component';
+import { BillFormComponent } from './components/bill/bill-form/bill-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,12 +24,17 @@ import { MedicineDetailsListComponent } from './components/medicine/medicine-det
     LoginComponent,
     DashboardComponent,
     MedicineDetailsFormComponent,
-    MedicineDetailsListComponent
+    MedicineDetailsListComponent,
+    BillFormComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => config.load(), deps: [AppConfig], multi: true },
