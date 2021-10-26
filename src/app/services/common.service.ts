@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CommonService {
 
+  public LOADING:boolean = false;
+
   constructor(private http:HttpClient,  private router:Router, private toastr: ToastrService) { 
   }
 

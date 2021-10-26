@@ -17,6 +17,7 @@ export class MedicineDetailsFormComponent implements OnInit {
   ngOnInit(): void {
     this.URLs = this.appConfig.config;
     this.medicineService.getRackList();
+    (this.medicineService.submitState == "Save")?this.getAllocatedRackList():null;
     this.medicineService.medicineNameList = this.medicineService.medicineNameList.map(name => name.toLocaleLowerCase());
   }
 
@@ -57,11 +58,23 @@ export class MedicineDetailsFormComponent implements OnInit {
     this.commonService.post(URL, this.medicineService.medicineForm.value).subscribe((response:any)=>{
       if(!response.error)
       {
-        this.commonService.redirect("/medicine/list");
+        this.medicineService.submitted = false;
         let alertMsg = (this.medicineService.submitState === "Save")?"Data Inserted":"Data Updated";
         this.commonService.successMessage(alertMsg);
+        this.commonService.redirect("/medicine/list");
       }
     });
+  }
+
+  public getAllocatedRackList()
+  {
+    this.commonService.post(this.URLs.api.medicine_list).subscribe((response:any)=>{
+      if(!response.error)
+      {
+        this.medicineService.allocatedRackList = response.data.map((element:any)=>element.rack_no);
+        this.medicineService.getRackList()
+      }
+    })
   }
 
 }

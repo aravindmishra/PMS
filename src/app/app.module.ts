@@ -15,6 +15,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MedicineDetailsFormComponent } from './components/medicine/medicine-details-form/medicine-details-form.component';
 import { MedicineDetailsListComponent } from './components/medicine/medicine-details-list/medicine-details-list.component';
 import { BillFormComponent } from './components/bill/bill-form/bill-form.component';
+import { NgxLoadingModule } from 'ngx-loading';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +36,8 @@ import { BillFormComponent } from './components/bill/bill-form/bill-form.compone
     AppRoutingModule,
     HttpClientModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => config.load(), deps: [AppConfig], multi: true },
