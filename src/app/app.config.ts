@@ -13,9 +13,14 @@ export class AppConfig {
 
     public load()
     {
-        this.http.get('../assets/config/config.json').subscribe((response:any)=>{
-            console.log(response);
-            this.config = response;
-        })
+        return new Promise((resolve, reject)=> {
+            setTimeout(()=> {
+                this.http.get('../assets/config/config.json').subscribe((response:any)=>{
+                    //console.log(response);
+                    this.config = response;
+                    resolve(true)
+                })
+            }, 0);
+        });
     }
 }

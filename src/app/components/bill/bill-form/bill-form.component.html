@@ -23,14 +23,18 @@
                             </div>
                             <div class="row ">
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" placeholder="Medicine Name">
+                                    <input type="text" list="brow" class="form-control" [(ngModel)]="medicineName" placeholder="Medicine Name" (focusout)="checkValidMedicine(medicineName)">
+                                    <p class="error-warning-message" *ngIf="!medicineName">  Please enter valid medicine </p>
+                                    <datalist id="brow" class="brow">
+                                        <option *ngFor="let name of medicineNameList" [value]="name">
+                                    </datalist>  
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="Quantity">
+                                    <input type="text" class="form-control" placeholder="Quantity" [(ngModel)]="quantity">
                                     <p class="error-warning-message"></p>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success"><i class="fa fa-plus"></i> Add</button>
+                                    <button type="button" class="btn btn-success" (click)="addMedicineInBill()"><i class="fa fa-plus"></i> Add</button>
                                 </div>
                             </div>
                         </div>
@@ -49,37 +53,28 @@
                                                 <th>Action</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-                                                <td><button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-                                                <td><button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-                                                <td><button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+										<tbody *ngIf="billMedicineList.length > 0">
+											<tr *ngFor="let item of billMedicineList; let i = index">
+                                                <td>{{ i+1 }}</td>
+												<td>{{ item.medicine_name}}</td>
+												<td>{{ item.purchased_qty }}</td>
+												<td>{{ item.total | number : '1.2-2' }}</td>
+                                                <td><button type="button" class="btn btn-danger" (click)="removeMedicineInBill(item)"><i class="fa fa-trash-o"></i></button></td>
 											</tr>
 										</tbody>
 									</table>
+                                    <div class="row no-data-found" *ngIf="billMedicineList.length == 0">
+                                        <div class="col-md-12">
+                                           <span> + Add Medicine</span>
+                                        </div>
+                                    </div>
                                     
                                     <div class="row">
                                         <div class="col-md-6">
                                             <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-print"></i> Bill</button>
                                         </div>
                                         <div class="col-md-6 total">
-                                            <h3 class="right-side"> Total : <span>1000.00</span></h3>
+                                            <h3 class="right-side"> Total : <span>{{totalAmount | number : '1.2-2' }}</span></h3>
                                         </div>
                                     </div>
 								</div>

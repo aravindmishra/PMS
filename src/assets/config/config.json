@@ -1,5 +1,7 @@
 {
     "api":{
-        "sample":"http://localhost/sample"
+        "add_medicine":"http://localhost:8000/medicine/add",
+        "update_medicine":"http://localhost:8000/medicine/update/",
+        "medicine_list":"http://localhost:8000/medicine/list"
     }
 }

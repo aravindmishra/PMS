@@ -4,7 +4,10 @@
 // @import url("./assets/css/main.css");
 @import '~ngx-toastr/toastr';
 
-
+.hand-cursor
+{
+    cursor: pointer;
+}
 .right-side
 {
     float: right;
@@ -25,4 +28,14 @@
     color: red;
     margin: 4px 10px;
     font-size: 13px;
+}
+
+button:focus{
+    outline: none !important;
+}
+
+.no-data-found
+{
+    text-align: center;
+    font-weight: 500;
 }

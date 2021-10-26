@@ -4,76 +4,83 @@
     <div class="main-content">
         <div class="container-fluid">
             <h3 class="page-title">Medicine Rack</h3>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Medicine Form</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row ">
-                                <div class="col-md-3"><label>Rack No.</label></div>
-                                <div class="col-md-6"><select class="form-control">
-                                    <option value="0">Choose Rack No.</option>
-                                    <option *ngFor="let rack of rackList" [value]="rack">{{rack}}</option>
-                                </select></div>
+            <form [formGroup]="medicineService.medicineForm">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Medicine Form</h3>
                             </div>
-                            <div class="row ">
-                                <div class="col-md-3"><label>Medicine name</label></div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Medicine Name" [(ngModel)]="medicineName" (keyup)="checkMedicineNameExistorNot(medicineName)">
-                                    <p class="error-warning-message" *ngIf="alreadyExsistName">Already Exist</p>
-                                </div>
-                            </div>
-                           
-                            <div class="row ">
-                                <div class="col-md-3"><label>Brand</label></div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Brand">
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col-md-3"><label>Power</label></div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Power">
-                                </div>
-                            </div>
-                            
-                            <div class="row ">
-                                <div class="col-md-3"><label>Price (per piece)</label></div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Price">
-                                </div>
-                            </div>
-                            
-                            <div class="row ">
-                                <div class="col-md-3"><label>Quantity</label></div>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Quantity">
-                                </div>
-                            </div>
-                            <br>
-                            <!-- <div class="row ">
-                                <div class="col-md-3"><label>Status</label></div>
-                                <div class="col-md-6">
-                                    <select class="form-control">
-                                        <option value="cheese">Active</option>
-                                        <option value="tomatoes">In-active</option>                        
+                            <div class="panel-body">
+                                <div class="row ">
+                                    <div class="col-md-3"><label>Rack No.</label></div>
+                                    <div class="col-md-6"><select class="form-control" formControlName="rack_no">
+                                        <option *ngFor="let rack of medicineService.rackList" [value]="rack">{{rack}}</option>
                                     </select>
                                 </div>
-                            </div> -->
-                            
-                            <div class="row ">
-                                <div class="col-md-9">
-                                    <button type="button" class="btn btn-success right-side"><i class="fa fa-check-circle"></i> Save</button>
-                                <button type="button" class="btn btn-danger right-side cancel-btn" (click)="cancel()"><i class="fa fa-close"></i> Cancel</button>
                                 </div>
-                            </div>                 
+                                <div class="row ">
+                                    <div class="col-md-3"><label>Medicine name</label></div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Medicine Name" formControlName="medicine_name" (keyup)="checkMedicineNameExistorNot()">
+                                        <p class="error-warning-message" *ngIf="alreadyExsistName">Already Exist</p>
+                                        <p class="error-warning-message" *ngIf="medicineService.submitted &&  f.medicine_name.errors.required"> Medicine name is required</p>
+                                    </div>
+                                </div>
+                            
+                                <div class="row ">
+                                    <div class="col-md-3"><label>Brand</label></div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Brand" formControlName="brand">
+                                        <p class="error-warning-message" *ngIf="medicineService.submitted &&  f.brand.errors.required"> Brand is required</p>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-md-3"><label>Power</label></div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Power" formControlName="power">
+                                        <p class="error-warning-message" *ngIf="medicineService.submitted &&  f.power.errors.required"> Power is required</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row ">
+                                    <div class="col-md-3"><label>Price (per piece)</label></div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Price" formControlName="price" (keypress)="commonService.numberOnly($event)">
+                                        <p class="error-warning-message" *ngIf="medicineService.submitted &&  f.price.errors.required"> Price is required</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row ">
+                                    <div class="col-md-3"><label>Quantity</label></div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="Quantity" formControlName="quantity" (keypress)="commonService.numberOnly($event)">
+                                        <p class="error-warning-message" *ngIf="medicineService.submitted &&  f.quantity.errors.required"> Quantity is required</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <!-- <div class="row ">
+                                    <div class="col-md-3"><label>Status</label></div>
+                                    <div class="col-md-6">
+                                        <select class="form-control">
+                                            <option value="cheese">Active</option>
+                                            <option value="tomatoes">In-active</option>                        
+                                        </select>
+                                    </div>
+                                </div> -->
+                                
+                                <div class="row ">
+                                    <div class="col-md-9">
+                                        <button type="button" class="btn btn-success right-side" (click)="onSubmit()"><i class="fa fa-check-circle"></i> {{medicineService.submitState}}</button>
+                                    <button type="button" class="btn btn-danger right-side cancel-btn" (click)="cancel()"><i class="fa fa-close"></i> Cancel</button>
+                                    </div>
+                                </div>                 
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
-                
-            </div>
+            </form>
         </div>
     </div>
 </div>

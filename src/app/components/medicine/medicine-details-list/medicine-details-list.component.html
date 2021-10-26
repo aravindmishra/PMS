@@ -8,14 +8,21 @@
                     <h3 class="page-title">Medicine Rack</h3>
                 </div>
                 <div class="col-md-6">
-                    <button type="button" class="btn btn-primary right-side" routerLink="/medicine/form"><i class="fa fa-plus"></i> Add</button>                </div>
+                    <button type="button" class="btn btn-primary right-side" (click)="addNewMedicine()"><i class="fa fa-plus"></i> Add</button></div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <!-- BASIC TABLE -->
                     <div class="panel">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Medicine Details</h3>                            
+                            <div class="row">
+                                <div class="col-md-9"><h3 class="panel-title">Medicine Details</h3> </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" [(ngModel)]="search" placeholder="Search.." (keyup)="searchFilter(search)">  
+                                </div>
+                            </div>
+                            
+                                                    
                         </div>
                         <div class="panel-body">
                             <table class="table table-hover">
@@ -28,38 +35,24 @@
                                         <th>Available Quantity</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Steve</td>
-                                        <td>Jobs</td>
-                                        <td>1</td>
+                                <tbody *ngIf="filterMedicineList.length > 0">
+                                    <tr class="hand-cursor" *ngFor="let item of filterMedicineList" (click)="updateMedicine(item)">
+                                        <td>{{ item.rack_no }}</td>
+                                        <td>{{ item.medicine_name }}</td>
+                                        <td>{{ item.brand }}/{{ item.power}}</td>
+                                        <td>{{ item.price| number : '1.2-2' }}</td>
                                         <td>
                                             <div class="progress">
                                                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"> 75%</div>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Simon</td>
-                                        <td>Philips</td>
-                                        <td>2</td>
-                                        <td><div class="progress">
-                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"> 75%</div>
-                                       </div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Jane</td>
-                                        <td>Doe</td>
-                                        <td>3</td>
-                                        <td><div class="progress">
-                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"> 75%</div>
-                                       </div></td>
-                                    </tr>
                                 </tbody>
+
                             </table>
+                            <div class="no-data-found" *ngIf="filterMedicineList.length == 0">
+                                <span>No data Found</span>
+                            <div>
                         </div>
                     </div>
                     <!-- END BASIC TABLE -->

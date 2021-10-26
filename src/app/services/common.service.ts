@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 @Injectable({
@@ -15,8 +15,9 @@ export class CommonService {
     (url)?this.router.navigate([url]):null
   }
 
-  public post(url:string,requestData:FormData)
+  public post(url:string,requestData?)
   {
+    // let headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*' });
     return this.http.post(url,requestData);
   }
 
