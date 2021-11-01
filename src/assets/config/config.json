@@ -2,6 +2,8 @@
     "api":{
         "add_medicine":"http://localhost:8000/medicine/add",
         "update_medicine":"http://localhost:8000/medicine/update/",
-        "medicine_list":"http://localhost:8000/medicine/list"
+        "medicine_list":"http://localhost:8000/medicine/list",
+        "check_customer_exist":"http://localhost:8000/customer/check",
+        "add_bill":"http://127.0.0.1:8000/bill/add"
     }
 }

@@ -29,6 +29,12 @@ export class CommonService {
     });
   }
 
+  public warningMessage(message:string) {
+    this.toastr.warning("error", message, {
+      timeOut: 3000,
+    });
+  }
+
   public errorMessage(message:string) {
     this.toastr.error("error", message, {
       timeOut: 3000,

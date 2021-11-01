@@ -14,27 +14,31 @@
                         <div class="panel-body">
                             <div class="row ">
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Mobile No." [(ngModel)]="mobileNo" (keypress)="commonService.numberOnly($event)"  maxlength="10">
-                                    <p *ngIf="checkValidMobileNo()!= 10" class="error-warning-message">  Please enter valid mobile no.</p>
+                                    <input type="text" class="form-control" placeholder="Mobile No." [(ngModel)]="mobileNo" (keypress)="commonService.numberOnly($event);" (keyup)="checkCustomer()" maxlength="10">
+                                    <p class="error-warning-message" *ngIf="submitted && !mobileNo"> Please enter mobile no.</p>
+                                    <p *ngIf="mobileNo && checkValidMobileNo()!= 10" class="error-warning-message">  Please enter valid mobile no.</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" placeholder="Name">
+                                    <input type="text" class="form-control" placeholder="Name" [(ngModel)]="customerName">
+                                    <p class="error-warning-message" *ngIf="submitted && !customerName"> Please enter customer name.</p>
                                 </div>
                             </div>
                             <div class="row ">
                                 <div class="col-md-4">
-                                    <input type="text" list="brow" class="form-control" [(ngModel)]="medicineName" placeholder="Medicine Name" (focusout)="checkValidMedicine(medicineName)">
-                                    <p class="error-warning-message" *ngIf="!medicineName">  Please enter valid medicine </p>
+                                    <input type="text" list="brow" class="form-control" [(ngModel)]="medicineName" placeholder="Medicine Name" (focusout)="checkValidMedicine(medicineName)" [disabled]="medicineNameList.length == 0">
+                                    <p class="error-warning-message" *ngIf="submitted && !medicineName">  Please enter valid medicine </p>
                                     <datalist id="brow" class="brow">
                                         <option *ngFor="let name of medicineNameList" [value]="name">
                                     </datalist>  
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" placeholder="Quantity" [(ngModel)]="quantity">
-                                    <p class="error-warning-message"></p>
+                                    <input type="text" class="form-control" placeholder="Quantity" [(ngModel)]="quantity" (keypress)="commonService.numberOnly($event);" [disabled]="medicineNameList.length == 0">
+                                    <p class="error-warning-message" *ngIf="submitted && !quantity"> Please enter quantity.</p>
+                                    <p class="error-warning-message" *ngIf="availableQtyAlert"> {{availableQtyAlert}}</p>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success" (click)="addMedicineInBill()"><i class="fa fa-plus"></i> Add</button>
+                                    <!-- <button type="button" class="btn btn-success" (click)="checkQuantity()" [disabled]="(mobileNo == '' || customerName == '' ||  medicineName == '' || quantity == '')"><i class="fa fa-plus"></i> Add</button> -->
+                                    <button type="button" class="btn btn-success" (click)="submit()"><i class="fa fa-plus"></i> Add</button>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +63,7 @@
 												<td>{{ item.medicine_name}}</td>
 												<td>{{ item.purchased_qty }}</td>
 												<td>{{ item.total | number : '1.2-2' }}</td>
-                                                <td><button type="button" class="btn btn-danger" (click)="removeMedicineInBill(item)"><i class="fa fa-trash-o"></i></button></td>
+                                                <td><button type="button" class="btn btn-danger remove-list" (click)="removeMedicineInBill(item)"><i class="fa fa-close"></i></button></td>
 											</tr>
 										</tbody>
 									</table>
@@ -71,10 +75,10 @@
                                     
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-print"></i> Bill</button>
+                                            <button type="button" class="btn btn-primary btn-lg" [disabled]="billMedicineList.length == 0" (click)="submitBill()"><i class="fa fa-print"></i> Bill</button>
                                         </div>
                                         <div class="col-md-6 total">
-                                            <h3 class="right-side"> Total : <span>{{totalAmount | number : '1.2-2' }}</span></h3>
+                                            <h3 class="right-side"> Total : <span>{{totalAmount | number : '4.2-2' }}</span></h3>
                                         </div>
                                     </div>
 								</div>
