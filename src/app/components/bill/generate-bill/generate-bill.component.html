@@ -1,0 +1,47 @@
+
+
+<!-- Modal body -->
+<div class="modal-body bill">
+    <div class="bill-body">
+        <div class="bill-content">
+            <div class="header">
+                <h2>Mass Medicals</h2>
+                <p>No.56, Gandhi Salai Road, TR Pattinam 609606</p>
+                <p>PH: 9447381991</p>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><p>Bill No. 1177</p></div>
+                <div class="col-md-4" style="text-align: center;"><p>Cust No. {{ customerMobileNo }}</p></div>
+                <div class="col-md-4 right-side"><p class="right-side">Date : {{ todayDate | date}}</p></div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Medicine</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="billService.billMedicineList.length > 0">
+                  <tr *ngFor="let item of billService.billMedicineList; let i = index">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ item.medicine_name}}</td>
+                    <td>{{ item.purchased_qty }}</td>
+                    <td>{{ item.total | number : '1.2-2' }}</td>
+                  </tr>
+                  
+                  <tr class="total">
+                    <td colspan="3"><span class="right-side">TOTAL :</span></td>
+                    <td><span>{{billService.totalAmount | number : '4.2-2' }}</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="footer">
+                <h4>{{ billService.convertNumberToWords(billService.totalAmount) |titlecase }} Only</h4>
+                <p>Goods Once Sold Cannot Taken Back. Thank you..! Visit Again..!</p>
+                <!-- <p>Thank you..! Visit Again..!</p> -->
+              </div>
+        </div>
+    </div>
+</div>

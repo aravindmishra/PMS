@@ -57,8 +57,8 @@
                                                 <th>Action</th>
 											</tr>
 										</thead>
-										<tbody *ngIf="billMedicineList.length > 0">
-											<tr *ngFor="let item of billMedicineList; let i = index">
+										<tbody *ngIf="billService.billMedicineList.length > 0">
+											<tr *ngFor="let item of billService.billMedicineList; let i = index">
                                                 <td>{{ i+1 }}</td>
 												<td>{{ item.medicine_name}}</td>
 												<td>{{ item.purchased_qty }}</td>
@@ -67,7 +67,7 @@
 											</tr>
 										</tbody>
 									</table>
-                                    <div class="row no-data-found" *ngIf="billMedicineList.length == 0">
+                                    <div class="row no-data-found" *ngIf="billService.billMedicineList.length == 0">
                                         <div class="col-md-12">
                                            <span> + Add Medicine</span>
                                         </div>
@@ -75,10 +75,10 @@
                                     
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <button type="button" class="btn btn-primary btn-lg" [disabled]="billMedicineList.length == 0" (click)="submitBill()"><i class="fa fa-print"></i> Bill</button>
+                                            <button type="button" class="btn btn-primary btn-lg" [disabled]="billService.billMedicineList.length == 0" data-toggle="modal" data-target="#myModal"><i class="fa fa-print"></i> Bill</button>
                                         </div>
                                         <div class="col-md-6 total">
-                                            <h3 class="right-side"> Total : <span>{{totalAmount | number : '4.2-2' }}</span></h3>
+                                            <h3 class="right-side"> Total : <span>{{billService.totalAmount | number : '4.2-2' }}</span></h3>
                                         </div>
                                     </div>
 								</div>
@@ -89,6 +89,32 @@
                 
             </div>
         </div>
+
+    
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Bill Recepit</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Model body -->
+               <app-generate-bill [customerMobileNo]="mobileNo" [customerName]="customerName"></app-generate-bill>
+
+               <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="submitBill()"><i class="fa fa-print"></i> Print</button>
+                    <button #closeModal type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                </div>
+        
+            </div>
+            </div>
+        </div>
+    
     </div>
+
+    
 </div>
 <!-- END MAIN CONTENT -->

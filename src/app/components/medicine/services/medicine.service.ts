@@ -12,6 +12,7 @@ export class MedicineService {
   public submitState:string="Save";
   public allocatedRackList:number[] = [];
   public updateId:number = 0;
+  public routerState:boolean = false;
   public medicineForm = new FormGroup({
     rack_no :new FormControl(),
     medicine_name :new FormControl('',Validators.required),
@@ -19,6 +20,7 @@ export class MedicineService {
     power :new FormControl('',Validators.required),
     price :new FormControl('',Validators.required),
     quantity :new FormControl('',Validators.required),
+    status:new FormControl(1),
   })
 
   constructor(private appConfig:AppConfig) { 

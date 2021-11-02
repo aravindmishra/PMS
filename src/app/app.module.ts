@@ -16,6 +16,8 @@ import { MedicineDetailsFormComponent } from './components/medicine/medicine-det
 import { MedicineDetailsListComponent } from './components/medicine/medicine-details-list/medicine-details-list.component';
 import { BillFormComponent } from './components/bill/bill-form/bill-form.component';
 import { NgxLoadingModule } from 'ngx-loading';
+import { NgxNumToWordsModule } from 'ngx-num-to-words'; 
+import { GenerateBillComponent } from './components/bill/generate-bill/generate-bill.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { NgxLoadingModule } from 'ngx-loading';
     DashboardComponent,
     MedicineDetailsFormComponent,
     MedicineDetailsListComponent,
-    BillFormComponent
+    BillFormComponent,
+    GenerateBillComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ import { NgxLoadingModule } from 'ngx-loading';
     HttpClientModule,
     FormsModule, 
     ReactiveFormsModule,
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
+    NgxNumToWordsModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: (config: AppConfig) => () => config.load(), deps: [AppConfig], multi: true },

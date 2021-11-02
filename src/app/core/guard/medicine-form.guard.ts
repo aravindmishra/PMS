@@ -18,7 +18,7 @@ export class MedicineFormGuard implements CanActivate, CanDeactivate<unknown> {
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.medicineService.medicineForm.dirty && this.medicineService.submitState == "Save") {
+    if (this.medicineService.medicineForm.dirty && this.medicineService.submitState == "Save" && !this.medicineService.routerState) {
       let state = confirm("Are you sure to discard changes?") ? true : false;
       return state;
     }

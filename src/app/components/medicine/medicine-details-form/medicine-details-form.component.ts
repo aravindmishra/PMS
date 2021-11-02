@@ -54,12 +54,14 @@ export class MedicineDetailsFormComponent implements OnInit {
 
   public submitMedicine()
   {
+    this.medicineService.routerState = false;
     let URL = (this.medicineService.submitState === "Save")? this.URLs.api.add_medicine : this.URLs.api.update_medicine + this.medicineService.updateId.toString();
     this.commonService.post(URL, this.medicineService.medicineForm.value).subscribe((response:any)=>{
       if(!response.error)
       {
+        this.medicineService.routerState = true;
         this.medicineService.submitted = false;
-        let alertMsg = (this.medicineService.submitState === "Save")?"Data Inserted":"Data Updated";
+        let alertMsg = (this.medicineService.submitState === "Save")?"New Medicine Added":"Medicine Updated";
         this.commonService.successMessage(alertMsg);
         this.commonService.redirect("/medicine/list");
       }

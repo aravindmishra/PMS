@@ -31,8 +31,10 @@
                                         <th>Rack No.</th>
                                         <th>Medicine Name</th>
                                         <th>Brand/Power</th>
-                                        <th>Price</th>                                        
+                                        <th>Price</th> 
+                                        <th>Status</th>                                       
                                         <th>Available Quantity</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody *ngIf="filterMedicineList.length > 0">
@@ -41,6 +43,7 @@
                                         <td>{{ item.medicine_name }}</td>
                                         <td>{{ item.brand }}/{{ item.power}}</td>
                                         <td>{{ item.price| number : '1.2-2' }}</td>
+                                        <td [ngClass]="{ green:item.status == 'Active', red:item.status == 'In-Active'  }">{{ item.status}}</td>
                                         <td>
                                             <div class="progress">
                                                  <div *ngIf="item.available_percentage >= 80"class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{item.available_percentage}}" aria-valuemin="0" aria-valuemax="100" [style.width.%]="item.available_percentage"> {{item.available_percentage}}%</div>
@@ -48,6 +51,7 @@
                                                  <div *ngIf="item.available_percentage <= 49" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{item.available_percentage}}" aria-valuemin="0" aria-valuemax="100" [style.width.%]="item.available_percentage"> {{item.available_percentage}}%</div>
                                             </div>
                                         </td>
+                                        
                                     </tr>
                                 </tbody>
 

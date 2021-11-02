@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CommonService } from '../../../services/common.service';
 import { AppConfig } from 'src/app/app.config';
+import { BillService } from '../services/bill.service';
 
 @Component({
   selector: 'app-bill-form',
@@ -17,14 +18,16 @@ export class BillFormComponent implements OnInit {
   public quantity: any = "";
   public medicineNameList: string[] = [];
   public medicineList: any = [];
-  public billMedicineList: any = [];
-  public totalAmount: number = 0;
+
+  @ViewChild('closeModal') private closeModal: ElementRef;
+ 
   public disableNameBox: boolean = false;
   public availableQtyAlert:string = "";
-  constructor(public commonService: CommonService, private appConfig: AppConfig,) { }
+  constructor(public commonService: CommonService, private appConfig: AppConfig,public billService:BillService) { }
 
   ngOnInit(): void {
     this.URLs = this.appConfig.config;
+    this.billService.billMedicineList = [];
     this.getMedicineNameList()
   }
 
@@ -38,7 +41,8 @@ export class BillFormComponent implements OnInit {
     this.commonService.post(this.URLs.api.medicine_list).subscribe((response: any) => {
       if (!response.error) {
         this.medicineList = response.data;
-        this.medicineNameList = response.data.map((element: any) => element.medicine_name);
+        this.medicineList = this.medicineList.filter((element:any)=> element.avaiable_quantity > 0 && element.status == 'Active')
+        this.medicineNameList = this.medicineList.map((element: any) => element.medicine_name);
         this.medicineNameList.sort()
       }
     }, (error) => {
@@ -59,10 +63,10 @@ export class BillFormComponent implements OnInit {
         billList["medicine_id"] = list[0]["medicine_id"];
         billList["medicine_name"] = list[0]["medicine_name"];
         billList["purchased_qty"] = this.quantity;
-        billList["avaiable_qty"] = list[0]["quantity"];
+        billList["avaiable_qty"] = list[0]["avaiable_quantity"];
         billList["price"] = list[0]["price"];
         billList["total"] = parseInt(this.quantity) * parseInt(list[0]["price"])
-        this.billMedicineList.push(billList);
+        this.billService.billMedicineList.push(billList);
         this.medicineName = ""; this.quantity = "";
         this.calculateTotal();
         this.balanceMedicineList("add",billList["medicine_name"]);
@@ -76,12 +80,12 @@ export class BillFormComponent implements OnInit {
       let list = this.medicineList.filter((element: any) => element.medicine_name === this.medicineName );
       if(list.length > 0)
       {
-        if(list[0]['quantity']>= this.quantity) {
+        if(list[0]['avaiable_quantity']>= this.quantity) {
           this.availableQtyAlert = "";
           this.addMedicineInBill();
         }
         else {
-          this.availableQtyAlert = "Available Quantity : "+ list[0]['quantity'];
+          this.availableQtyAlert = "Available Quantity : "+ list[0]['avaiable_quantity'];
           // this.commonService.warningMessage(this.availableQtyAlert);
         }
       }
@@ -89,20 +93,20 @@ export class BillFormComponent implements OnInit {
   }
 
   public removeMedicineInBill(item: any) {
-    let index = this.billMedicineList.indexOf(item)
+    let index = this.billService.billMedicineList.indexOf(item)
     if (index !== -1) {
-      this.billMedicineList.splice(index, 1);
+      this.billService.billMedicineList.splice(index, 1);
       this.calculateTotal();
       this.balanceMedicineList("removed",item.medicine_name);
     }
   }
 
   public calculateTotal() {
-    if (this.billMedicineList.length === 0) {
-      this.totalAmount = 0
+    if (this.billService.billMedicineList.length === 0) {
+      this.billService.totalAmount = 0
     }
     else {
-      (this.billMedicineList.length > 1) ? this.totalAmount = this.billMedicineList.reduce((a, b) => a.total + b.total) : this.totalAmount = this.billMedicineList[0]["total"];
+      (this.billService.billMedicineList.length > 1) ? this.billService.totalAmount = this.billService.billMedicineList.reduce((a, b) => a.total + b.total) : this.billService.totalAmount = this.billService.billMedicineList[0]["total"];
     }
   }
 
@@ -128,6 +132,32 @@ export class BillFormComponent implements OnInit {
         console.log(error);
       })
     }
+  }
+
+  public submitBill()
+  {
+    console.log(this.customerName,this.mobileNo,this.billService.billMedicineList);
+    let requestData = new FormData()
+    requestData.append("name", this.customerName);
+    requestData.append("mobile_no", this.mobileNo);
+    requestData.append("bill_medicine_list", JSON.stringify(this.billService.billMedicineList));
+    this.commonService.post(this.URLs.api.add_bill, requestData).subscribe((response: any) => {
+      console.log(response);
+      if (!response.error) {
+        if (response.status_code == 200) {
+          this.resetBillForm()
+          this.closeModal.nativeElement.click(); 
+          this.commonService.successMessage("Bill Generatored..!");
+        }
+      }
+      else
+      {
+        this.commonService.errorMessage("Something Went Wrong..");
+      }
+    }, (error) => {
+      console.log(error);
+      this.commonService.errorMessage("Something Went Wrong..");
+    })
   }
 
   public submit()
@@ -157,23 +187,16 @@ export class BillFormComponent implements OnInit {
     this.medicineNameList.sort()
   }
 
-  public submitBill()
+
+  public resetBillForm()
   {
-    console.log(this.customerName,this.mobileNo,this.billMedicineList);
-    let requestData = new FormData()
-    requestData.append("name", this.customerName);
-    requestData.append("mobile_no", this.mobileNo);
-    requestData.append("bill_medicine_list", JSON.stringify(this.billMedicineList));
-    this.commonService.post(this.URLs.api.add_bill, requestData).subscribe((response: any) => {
-      console.log(response);
-      if (!response.error) {
-        if (response.status_code == 200) {
-          this.commonService.successMessage("Bill Generatored..!")
-        }
-      }
-    }, (error) => {
-      console.log(error);
-    })
+    this.medicineName = "";
+    this.customerName = "";
+    this.mobileNo = "",
+    this.quantity = "";
+    this.billService.billMedicineList = [];
+    this.billService.totalAmount = 0;
+    this.getMedicineNameList()
   }
 
 }

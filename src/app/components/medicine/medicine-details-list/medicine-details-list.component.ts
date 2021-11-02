@@ -16,6 +16,7 @@ export class MedicineDetailsListComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.medicineService.routerState = false;
     this.URLs = this.appConfig.config;
     this.getMedicineList()
   }
@@ -55,7 +56,9 @@ export class MedicineDetailsListComponent implements OnInit {
     this.medicineService.submitState = 'Save';
     this.medicineService.submitted = false;
     this.commonService.redirect("/medicine/form");
-    this.medicineService.medicineForm.reset();
+    this.medicineService.medicineForm.reset({
+      status:1
+    });
   }
 
   public updateMedicine(item:any)
@@ -68,6 +71,7 @@ export class MedicineDetailsListComponent implements OnInit {
       this.removeUpdateRack(item.rack_no);
       this.medicineService.medicineForm.get("rack_no").setValue(item.rack_no);
       this.medicineService.medicineForm.reset(item);
+      (item.status == 'Active')?this.medicineService.medicineForm.get('status').setValue(1):this.medicineService.medicineForm.get('status').setValue(2);
       this.commonService.redirect("/medicine/form");
     }
   }
