@@ -4,6 +4,8 @@
         "update_medicine":"http://localhost:8000/medicine/update/",
         "medicine_list":"http://localhost:8000/medicine/list",
         "check_customer_exist":"http://localhost:8000/customer/check",
-        "add_bill":"http://127.0.0.1:8000/bill/add"
+        "add_bill":"http://localhost:8000/bill/add",
+        "purchase_history":"http://localhost:8000/purchase/list",
+        "filter_purchase_history":"http://localhost:8000/purchase/filter"
     }
 }

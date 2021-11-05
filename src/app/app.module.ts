@@ -16,8 +16,10 @@ import { MedicineDetailsFormComponent } from './components/medicine/medicine-det
 import { MedicineDetailsListComponent } from './components/medicine/medicine-details-list/medicine-details-list.component';
 import { BillFormComponent } from './components/bill/bill-form/bill-form.component';
 import { NgxLoadingModule } from 'ngx-loading';
+import { NgxPaginationModule } from 'ngx-pagination'; 
 import { NgxNumToWordsModule } from 'ngx-num-to-words'; 
 import { GenerateBillComponent } from './components/bill/generate-bill/generate-bill.component';
+import { PurchaseHistotyComponent } from './components/medicine/purchase-histoty/purchase-histoty.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { GenerateBillComponent } from './components/bill/generate-bill/generate-
     MedicineDetailsFormComponent,
     MedicineDetailsListComponent,
     BillFormComponent,
-    GenerateBillComponent
+    GenerateBillComponent,
+    PurchaseHistotyComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { GenerateBillComponent } from './components/bill/generate-bill/generate-
     AppRoutingModule,
     HttpClientModule,
     FormsModule, 
+    NgxPaginationModule,
     ReactiveFormsModule,
     NgxLoadingModule.forRoot({}),
     NgxNumToWordsModule

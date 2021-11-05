@@ -25,6 +25,7 @@ export class MedicineDetailsFormComponent implements OnInit {
 
   public cancel()
   {
+    this.medicineService.submitted = false;
     this.commonService.redirect("/medicine/list");
   }
 

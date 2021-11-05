@@ -6,6 +6,8 @@ import { MedicineDetailsFormComponent } from './components/medicine/medicine-det
 import { MedicineDetailsListComponent } from './components/medicine/medicine-details-list/medicine-details-list.component';
 import { BillFormComponent } from './components/bill/bill-form/bill-form.component';
 import { MedicineFormGuard } from './core/guard/medicine-form.guard';
+import { PurchaseHistotyComponent } from './components/medicine/purchase-histoty/purchase-histoty.component';
+
 const routes: Routes = [
   {
     path:'',
@@ -14,6 +16,10 @@ const routes: Routes = [
   {
     path:'dashboard',
     component:DashboardComponent
+  },
+  {
+    path:'bill/form',
+    component:BillFormComponent
   },
   {
     path:'medicine/list',
@@ -25,8 +31,8 @@ const routes: Routes = [
     canDeactivate: [MedicineFormGuard]
   },
   {
-    path:'bill/form',
-    component:BillFormComponent
+    path:'medicine/purchase_history',
+    component:PurchaseHistotyComponent
   }
 ];
 

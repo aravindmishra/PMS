@@ -1,0 +1,90 @@
+<!-- MAIN -->
+<div class="main purchase-history">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="page-title">Purchased History</h3>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary right-side" (click)="filterBlock = !filterBlock"><i class="fa fa-filter"></i>
+                        Filter</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="filterBlock">
+                <div class="col-md-12">
+                    <!-- PANEL HEADLINE -->
+                    <div class="panel panel-headline">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control right-side" placeholder="Mobile No." (keypress)="commonService.numberOnly($event)" maxlength="10" [(ngModel)]="filterContent['mobile_no']">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control right-side" placeholder="Medicine" [(ngModel)]="filterContent['medicine_name']">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="date" class="form-control right-side" placeholder="Date">
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-default right-side" title="Reset" (click)="resetFilter()"><i class="fa fa-refresh"></i> </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-success right-side" (click)="filterPurchaseList()"><i class="fa fa-search"></i> Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END PANEL HEADLINE -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- TABLE HOVER -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="panel-title">Purchased Item</h3>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer Name</th>
+                                        <th>Mobile No.</th>
+                                        <th>Medicine</th>
+                                        <th>Purchsed Quantity</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of purchaseList | paginate: { itemsPerPage: 10, currentPage: p }; let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{ item.customer_name | titlecase}}</td>
+                                        <td>{{ item.mobile_no}}</td>
+                                        <td>{{ item.medicine_name}}</td>
+                                        <td>{{ item.purchased_qty}}</td>
+                                        <td>{{ item.created_date | date:'medium'}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="no-data-found" *ngIf="purchaseList.length == 0">
+                                <span>No data Found</span>
+                            </div>
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
+                    </div>
+                    <!-- END TABLE HOVER -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
