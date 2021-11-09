@@ -20,6 +20,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxNumToWordsModule } from 'ngx-num-to-words'; 
 import { GenerateBillComponent } from './components/bill/generate-bill/generate-bill.component';
 import { PurchaseHistotyComponent } from './components/medicine/purchase-histoty/purchase-histoty.component';
+import { BillHistoryComponent } from './components/bill/bill-history/bill-history.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PurchaseHistotyComponent } from './components/medicine/purchase-histoty
     MedicineDetailsListComponent,
     BillFormComponent,
     GenerateBillComponent,
-    PurchaseHistotyComponent
+    PurchaseHistotyComponent,
+    BillHistoryComponent
   ],
   imports: [
     BrowserModule,

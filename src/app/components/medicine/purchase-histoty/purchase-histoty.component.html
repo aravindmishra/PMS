@@ -25,13 +25,13 @@
                                     <input type="text" class="form-control right-side" placeholder="Medicine" [(ngModel)]="filterContent['medicine_name']">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="date" class="form-control right-side" placeholder="Date">
+                                    <input type="date" class="form-control right-side" placeholder="Date" [(ngModel)]="filterContent['date']">
                                 </div>
                                 <div class="col-md-1">
                                     <button type="button" class="btn btn-default right-side" title="Reset" (click)="resetFilter()"><i class="fa fa-refresh"></i> </button>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success right-side" (click)="filterPurchaseList()"><i class="fa fa-search"></i> Search</button>
+                                    <button type="button" class="btn btn-success right-side" (click)="filter()"><i class="fa fa-search"></i> Search</button>
                                 </div>
                             </div>
                         </div>
@@ -64,8 +64,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr
-                                        *ngFor="let item of purchaseList | paginate: { itemsPerPage: 10, currentPage: p }; let i=index">
+                                    <tr *ngFor="let item of filteredpurchaseList | paginate: { itemsPerPage: 10, currentPage: p }; let i=index">
                                         <td>{{i+1}}</td>
                                         <td>{{ item.customer_name | titlecase}}</td>
                                         <td>{{ item.mobile_no}}</td>
@@ -76,7 +75,7 @@
 
                                 </tbody>
                             </table>
-                            <div class="no-data-found" *ngIf="purchaseList.length == 0">
+                            <div class="no-data-found" *ngIf="filteredpurchaseList.length == 0">
                                 <span>No data Found</span>
                             </div>
                             <pagination-controls (pageChange)="p = $event"></pagination-controls>

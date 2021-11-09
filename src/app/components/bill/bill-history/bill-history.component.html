@@ -1,0 +1,68 @@
+<!-- MAIN -->
+<div class="main">
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="page-title">Bill History</h3>
+                </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- PANEL HEADLINE -->
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Bills </h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Bill No.</th>
+                                        <th>Customer Name</th>
+                                        <th>Mobile No.</th>
+                                        <th>Date</th>
+                                        <th>Bill</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of billList; let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.bill_no}}</td>
+                                        <td>{{item.name}}</td>
+                                        <td>{{item.mobile_no}}</td>
+                                        <td>{{item.created_date | date}}</td>
+                                        <td><i class="fa fa-file-text hand-cursor bill-show" aria-hidden="true" data-toggle="modal" data-target="#myModal" (click)="setBill(item)"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">Bill Recepit</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Model body -->
+       <app-generate-bill [customerMobileNo]="mobileNo" [customerName]="customerName"></app-generate-bill>
+
+       <!-- Modal footer -->
+        <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="submitBill()"><i class="fa fa-print"></i> Print</button>
+            <button #closeModal type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+        </div> -->
+
+    </div>
+    </div>
+</div>
+</div>

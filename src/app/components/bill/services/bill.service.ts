@@ -18,4 +18,13 @@ export class BillService {
   {
     return this.ngxNumToWordsService.inWords(value, this.lang);
   }
+
+  public calculateTotal() {
+    if (this.billMedicineList.length === 0) {
+      this.totalAmount = 0
+    }
+    else {
+      (this.billMedicineList.length > 1) ? this.totalAmount = this.billMedicineList.reduce((a, b) => a.total + b.total) : this.totalAmount = this.billMedicineList[0]["total"];
+    }
+  }
 }

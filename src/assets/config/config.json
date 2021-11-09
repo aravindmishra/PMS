@@ -6,6 +6,7 @@
         "check_customer_exist":"http://localhost:8000/customer/check",
         "add_bill":"http://localhost:8000/bill/add",
         "purchase_history":"http://localhost:8000/purchase/list",
-        "filter_purchase_history":"http://localhost:8000/purchase/filter"
+        "filter_purchase_history":"http://localhost:8000/purchase/filter",
+        "bill_list":"http://localhost:8000/bill/list"
     }
 }

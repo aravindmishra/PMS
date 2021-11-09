@@ -28,6 +28,7 @@ export class BillFormComponent implements OnInit {
   ngOnInit(): void {
     this.URLs = this.appConfig.config;
     this.billService.billMedicineList = [];
+    this.billService.totalAmount = 0;
     this.getMedicineNameList()
   }
 
@@ -68,7 +69,7 @@ export class BillFormComponent implements OnInit {
         billList["total"] = parseInt(this.quantity) * parseInt(list[0]["price"])
         this.billService.billMedicineList.push(billList);
         this.medicineName = ""; this.quantity = "";
-        this.calculateTotal();
+        this.billService.calculateTotal();
         this.balanceMedicineList("add",billList["medicine_name"]);
       }
     }
@@ -96,19 +97,11 @@ export class BillFormComponent implements OnInit {
     let index = this.billService.billMedicineList.indexOf(item)
     if (index !== -1) {
       this.billService.billMedicineList.splice(index, 1);
-      this.calculateTotal();
+      this.billService.calculateTotal();
       this.balanceMedicineList("removed",item.medicine_name);
     }
   }
 
-  public calculateTotal() {
-    if (this.billService.billMedicineList.length === 0) {
-      this.billService.totalAmount = 0
-    }
-    else {
-      (this.billService.billMedicineList.length > 1) ? this.billService.totalAmount = this.billService.billMedicineList.reduce((a, b) => a.total + b.total) : this.billService.totalAmount = this.billService.billMedicineList[0]["total"];
-    }
-  }
 
   public checkCustomer() {
     console.log("ENTER")

@@ -7,6 +7,7 @@ import { MedicineDetailsListComponent } from './components/medicine/medicine-det
 import { BillFormComponent } from './components/bill/bill-form/bill-form.component';
 import { MedicineFormGuard } from './core/guard/medicine-form.guard';
 import { PurchaseHistotyComponent } from './components/medicine/purchase-histoty/purchase-histoty.component';
+import { BillHistoryComponent } from './components/bill/bill-history/bill-history.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path:'bill/form',
     component:BillFormComponent
+  },
+  {
+    path:'bill/history',
+    component:BillHistoryComponent
   },
   {
     path:'medicine/list',
