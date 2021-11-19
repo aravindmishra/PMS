@@ -27,6 +27,7 @@ export class BillFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.URLs = this.appConfig.config;
+    this.commonService.activeUrl = "bill";
     this.billService.billMedicineList = [];
     this.billService.totalAmount = 0;
     this.getMedicineNameList()

@@ -8,36 +8,44 @@ import { BillFormComponent } from './components/bill/bill-form/bill-form.compone
 import { MedicineFormGuard } from './core/guard/medicine-form.guard';
 import { PurchaseHistotyComponent } from './components/medicine/purchase-histoty/purchase-histoty.component';
 import { BillHistoryComponent } from './components/bill/bill-history/bill-history.component';
+import { CommonGuard } from './core/guard/common.guard';
 
 const routes: Routes = [
   {
     path:'',
-    component:LoginComponent
-  },
+    component:LoginComponent,
+    canActivate:[CommonGuard]
+  },   
   {
     path:'dashboard',
-    component:DashboardComponent
+    component:DashboardComponent,
+    canActivate:[CommonGuard]
   },
   {
     path:'bill/form',
-    component:BillFormComponent
+    component:BillFormComponent,
+    canActivate:[CommonGuard]
   },
   {
     path:'bill/history',
-    component:BillHistoryComponent
+    component:BillHistoryComponent,
+    canActivate:[CommonGuard]
   },
   {
     path:'medicine/list',
-    component:MedicineDetailsListComponent
+    component:MedicineDetailsListComponent,
+    canActivate:[CommonGuard]
   },
   {
     path:'medicine/form',
     component:MedicineDetailsFormComponent,
+    canActivate:[CommonGuard],
     canDeactivate: [MedicineFormGuard]
   },
   {
     path:'medicine/purchase_history',
-    component:PurchaseHistotyComponent
+    component:PurchaseHistotyComponent,
+    canActivate:[CommonGuard]
   }
 ];
 

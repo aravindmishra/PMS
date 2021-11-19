@@ -22,4 +22,6 @@ export class GenerateBillComponent implements OnInit {
     console.log(this.billService.convertNumberToWords(1234))
   }
 
+
+
 }

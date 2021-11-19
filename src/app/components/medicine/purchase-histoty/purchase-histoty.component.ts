@@ -25,6 +25,7 @@ export class PurchaseHistotyComponent implements OnInit {
   constructor(public commonService:CommonService, private appConfig:AppConfig) { }
 
   ngOnInit(): void {
+    this.commonService.activeUrl = "medicine";
     this.URLs = this.appConfig.config;
     this.getPurchaseList();
   }

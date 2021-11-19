@@ -15,6 +15,7 @@ export class MedicineDetailsFormComponent implements OnInit {
   constructor(public commonService:CommonService, private appConfig:AppConfig, public medicineService:MedicineService) { }
 
   ngOnInit(): void {
+    this.commonService.activeUrl = "medicine";
     this.URLs = this.appConfig.config;
     this.medicineService.getRackList();
     (this.medicineService.submitState == "Save")?this.getAllocatedRackList():null;

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonService } from '../../../services/common.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public commonService:CommonService,private router : Router) { }
 
   ngOnInit(): void {
+    console.log('router',this.router.url);
   }
 
 }

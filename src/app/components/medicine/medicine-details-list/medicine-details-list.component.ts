@@ -16,6 +16,7 @@ export class MedicineDetailsListComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.commonService.activeUrl = "medicine";
     this.medicineService.routerState = false;
     this.URLs = this.appConfig.config;
     this.getMedicineList()

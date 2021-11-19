@@ -1,18 +1,18 @@
 <!-- LEFT SIDEBAR -->
-<div id="sidebar-nav" class="sidebar">
+<div id="sidebar-nav" class="sidebar" *ngIf="!commonService.loginPage">
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
                 <li><a href="index.html" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-                <li><a class="" routerLink="/bill/form"><i class="fa fa-print"></i> <span>Bill</span></a></li>
+                <li><a [ngClass]="{'active':commonService.activeUrl == 'bill'}" routerLink="/bill/form"><i class="fa fa-print"></i> <span>Bill</span></a></li>
                 <li>
-                    <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="fa fa-cubes"></i> <span>Medicine</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                    <a href="#subPages" data-toggle="collapse" class="collapsed" [ngClass]="{'active':commonService.activeUrl == 'medicine'}"><i class="fa fa-cubes"></i> <span>Medicine</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                     <div id="subPages" class="collapse ">
                         <ul class="nav">
                             <li><a routerLink="/medicine/list" class="">Medicine Rack</a></li>
                         </ul>
                         <ul class="nav">
-                            <li><a routerLink="/medicine/purchase_history" class="">Purchase History</a></li>
+                            <li><a routerLink="/medicine/purchase_history" class="active">Purchase History</a></li>
                         </ul>
                         <ul class="nav">
                             <li><a routerLink="/bill/history" class="">Bill History</a></li>

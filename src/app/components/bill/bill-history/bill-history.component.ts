@@ -17,6 +17,7 @@ export class BillHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.URLs = this.appConfig.config;
+    this.commonService.activeUrl = "medicine";
     this.getBillList();
   }
 
