@@ -24,7 +24,18 @@ export class BillService {
       this.totalAmount = 0
     }
     else {
-      (this.billMedicineList.length > 1) ? this.totalAmount = this.billMedicineList.reduce((a, b) => a.total + b.total) : this.totalAmount = this.billMedicineList[0]["total"];
+      // (this.billMedicineList.length > 1) ? this.totalAmount = this.billMedicineList.reduce((a, b) => a.total + b.total) : this.totalAmount = this.billMedicineList[0]["total"];
+      if(this.billMedicineList.length > 1)
+      {
+        let count = 0;
+        this.billMedicineList.forEach((element:any) => count += element.total);
+        this.totalAmount = count;
+      }
+      else
+      {
+        this.totalAmount = this.billMedicineList[0]["total"]
+      }
     }
+    debugger;
   }
 }

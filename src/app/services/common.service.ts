@@ -32,7 +32,7 @@ export class CommonService {
   }
 
   public warningMessage(message:string) {
-    this.toastr.warning("error", message, {
+    this.toastr.warning("warning", message, {
       timeOut: 3000,
     });
   }

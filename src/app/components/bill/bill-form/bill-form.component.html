@@ -62,7 +62,7 @@
                                                 <td>{{ i+1 }}</td>
 												<td>{{ item.medicine_name}}</td>
 												<td>{{ item.purchased_qty }}</td>
-												<td>{{ item.total | number : '1.2-2' }}</td>
+												<td>{{ item.total |currency:"INR":"symbol" }}</td>
                                                 <td><button type="button" class="btn btn-danger remove-list" (click)="removeMedicineInBill(item)"><i class="fa fa-close"></i></button></td>
 											</tr>
 										</tbody>
@@ -78,7 +78,7 @@
                                             <button type="button" class="btn btn-primary btn-lg" [disabled]="billService.billMedicineList.length == 0" data-toggle="modal" data-target="#myModal"><i class="fa fa-print"></i> Bill</button>
                                         </div>
                                         <div class="col-md-6 total">
-                                            <h3 class="right-side"> Total : <span>{{billService.totalAmount | number : '4.2-2' }}</span></h3>
+                                            <h3 class="right-side"> Total : <span>{{billService.totalAmount |currency:"INR":"symbol" }}</span></h3>
                                         </div>
                                     </div>
 								</div>
